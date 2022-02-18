@@ -22,6 +22,15 @@ proc generateRandomColors(num: int): seq[Color] =
     random_clrs.add(color(clr[0], clr[1], clr[2], clr[3]))
   return random_clrs
 
+proc invertedChannel(channel: float): float =
+  if channel < 0.7: 1.0 else: 0.0
+
+proc getInvertedColor(clr: Color): Color = 
+  result = Color(r: invertedChannel(clr.r),
+                 g: invertedChannel(clr.g),
+                 b: invertedChannel(clr.b), 
+                 a: 1.0)
+
 proc exportColorPallete(pallete: seq[Color]) = 
   let f = open("pallete_export.txt", fmAppend)
   defer: f.close()
@@ -48,7 +57,7 @@ proc drawMain() =
         box 173, 10, 88, 18
         constraints cCenter, cMax
         fill "#ffffff"
-        font "IBM Plex Sans", 12, 400, 0, hCenter, vCenter
+        font "IBM Plex Sans Bold", 12, 400, 0, hCenter, vCenter
         characters "Export Pallete"
         layoutAlign laStretch
       rectangle "Rectangle 6":
@@ -67,7 +76,7 @@ proc drawMain() =
         box 20, 10, 102, 18
         constraints cCenter, cMax
         fill "#222020"
-        font "IBM Plex Sans", 12, 400, 0, hCenter, vCenter
+        font "IBM Plex Sans Bold", 12, 400, 0, hCenter, vCenter
         characters "Generate pallete"
         layoutAlign laStretch
       rectangle "Rectangle 5":
@@ -83,15 +92,15 @@ proc drawMain() =
     text "#FFFFFF":
       box 101, 218, 64, 18
       constraints cStretch, cMax
-      fill "#000000"
-      font "IBM Plex Sans", 12, 400, 0, hCenter, vCenter
+      fill getInvertedColor(all_colors[0]).toHtmlHex()
+      font "IBM Plex Sans Bold", 12, 400, 0, hCenter, vCenter
       characters all_colors[0].toHtmlHex()
       layoutAlign laStretch
     text "#2C1552":
       box 389, 218, 64, 18
       constraints cStretch, cMax
-      fill "#ffffff"
-      font "IBM Plex Sans", 12, 400, 0, hCenter, vCenter
+      fill getInvertedColor(all_colors[1]).toHtmlHex()
+      font "IBM Plex Sans Bold", 12, 400, 0, hCenter, vCenter
       characters all_colors[1].toHtmlHex()
       layoutAlign laStretch
     rectangle "Rectangle 4":
@@ -103,8 +112,8 @@ proc drawMain() =
     text "#ACCAD3":
       box 245, 218, 64, 18
       constraints cStretch, cMax
-      fill "#000000"
-      font "IBM Plex Sans", 12, 400, 0, hCenter, vCenter
+      fill getInvertedColor(all_colors[2]).toHtmlHex()
+      font "IBM Plex Sans Bold", 12, 400, 0, hCenter, vCenter
       characters all_colors[2].toHtmlHex()
       layoutAlign laStretch
     rectangle "Rectangle 3":
