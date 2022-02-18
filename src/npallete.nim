@@ -9,9 +9,6 @@ loadFont("IBM Plex Sans Bold", "IBMPlexSans-Bold.ttf")
 
 randomize()
 
-var 
-  all_colors: seq[Color]
-
 proc generateColor(): seq[float] =
   var gen_clr: seq[float]
   for i in 0..3:
@@ -28,21 +25,14 @@ proc generateRandomColors(num: int): seq[Color] =
   return random_clrs
 
 
-# var
-#   gen_colors: seq[Color]
-# gen_colors = generateRandomColors(3)
-# echo gen_colors
+# Generate colors
+var 
+  all_colors: seq[Color]
+
 all_colors = generateRandomColors(3)
 
 
 proc drawMain() =
-    # frame "main":
-    #   box 0, 0, 620, 140
-    #   for i in 0 .. 3:
-    #     group "block":
-    #       box 20 + i * 120, 20, 100, 100
-    #       fill all_colors[i].toHtmlHex()
-
   frame "main":
     box 0, 0, 670, 420
     fill "#ffffff"
@@ -76,12 +66,11 @@ proc drawMain() =
         box 0, 0, 142, 38
         constraints cCenter, cMax
         fill "#ffffff"
-        stroke "#ffffff"
         onHover:
-          fill "#222020"
-          stroke "#ffffff"
+          fill "#cccccc"
+        onClick:
+          all_colors = generateRandomColors(3)
         cornerRadius 4
-        strokeWeight 2
         layoutAlign laStretch
     text "#FFFFFF":
       box 101, 218, 64, 18
@@ -130,8 +119,4 @@ proc drawMain() =
 
 
 when isMainModule:
-
   startFidget(drawMain, w = 670, h = 420)
-
-  for clr in all_colors:
-    echo clr, " #", clr.toHexAlpha()
