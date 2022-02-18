@@ -1,7 +1,5 @@
-include prelude
 import chroma
 import random
-import math
 import fidget
 
 loadFont("IBM Plex Sans", "IBMPlexSans-Regular.ttf")
@@ -12,7 +10,7 @@ randomize()
 proc generateColor(): seq[float] =
   var gen_clr: seq[float]
   for i in 0..3:
-    gen_clr.add(round(rand(0.0..1.0), 2))
+    gen_clr.add(rand(0.0..1.0))
   return gen_clr
 
 proc generateRandomColors(num: int): seq[Color] =
@@ -24,14 +22,20 @@ proc generateRandomColors(num: int): seq[Color] =
     random_clrs.add(color(clr[0], clr[1], clr[2], clr[3]))
   return random_clrs
 
+proc exportColorPallete(pallete: seq[Color]) = 
+  let f = open("pallete_export.txt", fmAppend)
+  defer: f.close()
+
+  f.writeLine("\nPALLETE")
+  for i in 0..(len(pallete) - 1):
+    f.writeLine(pallete[i].toHtmlHex(), " ", pallete[i])
 
 # Generate colors
-var 
-  all_colors: seq[Color]
-
-all_colors = generateRandomColors(3)
+var all_colors: seq[Color]
+all_colors = generateRandomColors(2)
 
 
+# Create the UI
 proc drawMain() =
   frame "main":
     box 0, 0, 670, 420
@@ -52,6 +56,10 @@ proc drawMain() =
         constraints cCenter, cMax
         fill "#222020"
         stroke "#ffffff"
+        onHover:
+          fill "#474747"
+        onClick:
+          exportColorPallete(all_colors)
         cornerRadius 4
         strokeWeight 2
         layoutAlign laStretch
@@ -69,7 +77,7 @@ proc drawMain() =
         onHover:
           fill "#cccccc"
         onClick:
-          all_colors = generateRandomColors(3)
+          all_colors = generateRandomColors(2)
         cornerRadius 4
         layoutAlign laStretch
     text "#FFFFFF":
@@ -117,6 +125,6 @@ proc drawMain() =
       fill "#222020"
       layoutAlign laStretch
 
-
+# Start program
 when isMainModule:
   startFidget(drawMain, w = 670, h = 420)
