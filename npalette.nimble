@@ -5,7 +5,7 @@ author        = "cs"
 description   = ""
 license       = "Apache-2.0"
 srcDir        = "src"
-bin           = @["npallete"]
+bin           = @["npalette"]
 
 
 # Dependencies

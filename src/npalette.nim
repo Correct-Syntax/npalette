@@ -31,11 +31,11 @@ proc getInvertedColor(clr: Color): Color =
                  b: invertedChannel(clr.b), 
                  a: 1.0)
 
-proc exportColorPallete(pallete: seq[Color]) = 
-  let f = open("pallete_export.txt", fmAppend)
+proc exportColorPalette(pallete: seq[Color]) = 
+  let f = open("palette_export.txt", fmAppend)
   defer: f.close()
 
-  f.writeLine("\nPALLETE")
+  f.writeLine("\nPALETTE")
   for i in 0..(len(pallete) - 1):
     f.writeLine(pallete[i].toHtmlHex(), " ", pallete[i])
 
@@ -58,7 +58,7 @@ proc drawMain() =
         constraints cCenter, cMax
         fill "#ffffff"
         font "IBM Plex Sans Bold", 12, 400, 0, hCenter, vCenter
-        characters "Export Pallete"
+        characters "Export Palette"
         layoutAlign laStretch
       rectangle "Rectangle 6":
         box 154, 0, 127, 38
@@ -68,7 +68,7 @@ proc drawMain() =
         onHover:
           fill "#474747"
         onClick:
-          exportColorPallete(all_colors)
+          exportColorPalette(all_colors)
         cornerRadius 4
         strokeWeight 2
         layoutAlign laStretch

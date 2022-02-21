@@ -1,6 +1,6 @@
-# npallete
+# npalette
 
-A little random color pallete generator written in Nim (for learning purposes). 
+A little random color palette generator written in Nim (for learning purposes). 
 
 
 # Running the code
